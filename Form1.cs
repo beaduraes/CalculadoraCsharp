@@ -42,9 +42,9 @@ namespace CalculadoraBase
                     display.Text = "";
                     virgula = false;
                 }
-                catch (System.FormatException exp)
+                catch (System.FormatException)
                 {
-                    MessageBox.Show("Erro no formato do número!");
+                    MessageBox.Show("Erro no formato do número");
 
                 }
             }
