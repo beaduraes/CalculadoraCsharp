@@ -40,7 +40,7 @@
             button7 = new Button();
             button8 = new Button();
             bsoma = new Button();
-            button10 = new Button();
+            bsub = new Button();
             button11 = new Button();
             button13 = new Button();
             button12 = new Button();
@@ -213,18 +213,19 @@
             bsoma.UseVisualStyleBackColor = true;
             bsoma.Click += bsoma_Click;
             // 
-            // button10
+            // bsub
             // 
-            button10.AutoSize = true;
-            button10.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            button10.Location = new Point(115, 127);
-            button10.Margin = new Padding(3, 2, 3, 2);
-            button10.Name = "button10";
-            button10.Size = new Size(30, 30);
-            button10.TabIndex = 16;
-            button10.Text = "-";
-            button10.TextAlign = ContentAlignment.BottomCenter;
-            button10.UseVisualStyleBackColor = true;
+            bsub.AutoSize = true;
+            bsub.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            bsub.Location = new Point(115, 127);
+            bsub.Margin = new Padding(3, 2, 3, 2);
+            bsub.Name = "bsub";
+            bsub.Size = new Size(30, 30);
+            bsub.TabIndex = 16;
+            bsub.Text = "-";
+            bsub.TextAlign = ContentAlignment.BottomCenter;
+            bsub.UseVisualStyleBackColor = true;
+            bsub.Click += bsub_Click;
             // 
             // button11
             // 
@@ -238,6 +239,7 @@
             button11.Text = "*";
             button11.TextAlign = ContentAlignment.BottomCenter;
             button11.UseVisualStyleBackColor = true;
+            button11.Click += button11_Click;
             // 
             // button13
             // 
@@ -263,6 +265,7 @@
             button12.Text = "/";
             button12.TextAlign = ContentAlignment.BottomCenter;
             button12.UseVisualStyleBackColor = true;
+            button12.Click += button12_Click;
             // 
             // bclear
             // 
@@ -410,7 +413,7 @@
             Controls.Add(button13);
             Controls.Add(button12);
             Controls.Add(button11);
-            Controls.Add(button10);
+            Controls.Add(bsub);
             Controls.Add(button9);
             Controls.Add(button8);
             Controls.Add(button7);
@@ -448,7 +451,7 @@
         private Button button7;
         private Button button8;
         private Button bsoma;
-        private Button button10;
+        private Button bsub;
         private Button button11;
         private Button button13;
         private Button button12;
