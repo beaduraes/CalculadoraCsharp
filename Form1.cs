@@ -213,5 +213,11 @@ namespace CalculadoraBase
 
 
         }
+
+        private void créditosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormCreditos formCreditos = new FormCreditos();
+            formCreditos.ShowDialog();
+        }
     }
 }
