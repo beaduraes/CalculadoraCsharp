@@ -43,8 +43,9 @@
             labelCred.RightToLeft = RightToLeft.No;
             labelCred.Size = new Size(413, 170);
             labelCred.TabIndex = 0;
-            labelCred.Text = "Desenvolvido por: \r\n\r\nDiego Conceição\r\nBeatriz Durães";
+            labelCred.Text = "Desenvolvido por: \r\n\r\nDiogo Oliveira\r\nBeatriz Durães";
             labelCred.TextAlign = ContentAlignment.MiddleCenter;
+            labelCred.Click += labelCred_Click;
             // 
             // buttonfechar
             // 

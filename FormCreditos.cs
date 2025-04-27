@@ -16,5 +16,10 @@
         {
 
         }
+
+        private void labelCred_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
