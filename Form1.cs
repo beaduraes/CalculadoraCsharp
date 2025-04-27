@@ -79,7 +79,25 @@ namespace CalculadoraBase
                     }
                     resp = v1 / v2;
                     break;
-
+                case 5: // Porcentagem
+                    if (v1 == 0)
+                    {
+                        MessageBox.Show("Valor base igual a zero.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    resp = Math.Round((v1 / 100) * v2, 5);
+                    break;
+                case 6: // Exponenciação
+                    resp = Math.Pow(v1, v2);
+                    if (v1 == 0 && v2 == 0) resp = 1;
+                    break;
+                case 7: // Radiciação
+                    resp = Math.Pow(v1, 1/v2);
+                    if (v1 == 0 && v2 == 0) resp = 1;
+                    break;
+                case 8: // Radiciação
+                    // Implementado diretamente
+                    return;
                 default:
                     MessageBox.Show("Operação não reconhecida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -218,6 +236,87 @@ namespace CalculadoraBase
         {
             FormCreditos formCreditos = new FormCreditos();
             formCreditos.ShowDialog();
+        }
+
+        private void bporcento_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(display.Text))
+            {
+                try
+                {
+                    operacao = 5;
+                    v1 = Double.Parse(display.Text);
+                    display.Text = "";
+                    virgula = false;
+                }
+                catch (System.FormatException)
+                {
+                    MessageBox.Show("Erro no formato do número");
+
+                }
+            }
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(display.Text))
+            {
+                try
+                {
+                    operacao = 8;
+                    v1 = Double.Parse(display.Text);
+                    resp = Math.Pow(v1, 2);
+                    display.Text = $"{resp}";
+                    virgula = false;
+                }
+                catch (System.FormatException)
+                {
+                    MessageBox.Show("Erro no formato do número");
+
+                }
+            }
+
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(display.Text))
+            {
+                try
+                {
+                    operacao = 6;
+                    v1 = Double.Parse(display.Text);
+                    display.Text = "";
+                    virgula = false;
+                }
+                catch (System.FormatException)
+                {
+                    MessageBox.Show("Erro no formato do número");
+
+                }
+            }
+
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(display.Text))
+            {
+                try
+                {
+                    operacao = 7;
+                    v1 = Double.Parse(display.Text);
+                    display.Text = "";
+                    virgula = false;
+                }
+                catch (System.FormatException)
+                {
+                    MessageBox.Show("Erro no formato do número");
+
+                }
+            }
+
+
         }
     }
 }
