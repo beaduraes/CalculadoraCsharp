@@ -16,12 +16,7 @@ namespace CalculadoraBase
 
         }
 
-        private void b1_Click(object sender, EventArgs e)
-        {
-            display.Text = display.Text + "1";
-        }
-
-        private void bvirgula_Click(object sender, EventArgs e)
+        private void bVirgula_Click(object sender, EventArgs e)
         {
             if (!virgula)
             {
@@ -90,13 +85,13 @@ namespace CalculadoraBase
                     resp = Math.Round((v1 / 100) * v2, 5);
                     break;
                 case 6: // Exponenciação
-                    if(v1 < 0)
+                    if (v1 < 0)
                     {
                         MessageBox.Show("Base negativa não é permitida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
-                    if(v2 < 0)
+                    if (v2 < 0)
                     {
                         MessageBox.Show("Expoente negativo não é permitido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
@@ -106,19 +101,19 @@ namespace CalculadoraBase
                     break;
                 case 7: // Radiciação
 
-                    if(v1 < 0 && v2 % 2 == 0)
+                    if (v1 < 0 && v2 % 2 == 0)
                     {
                         MessageBox.Show("Raiz de número negativo não é permitida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
-                    if(v2 == 0)
+                    if (v2 == 0)
                     {
                         MessageBox.Show("Raiz de zero não é permitida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
-                    resp = (v1 == 0 && v2 == 0) ? 1 : Math.Pow(v1, 1.0 / v2); 
+                    resp = (v1 == 0 && v2 == 0) ? 1 : Math.Pow(v1, 1.0 / v2);
                     if (v1 == 0 && v2 == 0) resp = 1;
                     break;
                 default:
@@ -130,7 +125,7 @@ namespace CalculadoraBase
             virgula = (resp % 1) != 0;
         }
 
-        private void bclear_Click(object sender, EventArgs e)
+        private void bClear_Click(object sender, EventArgs e)
         {
             display.Text = "";
             virgula = false;
@@ -138,17 +133,17 @@ namespace CalculadoraBase
             v2 = 0;
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void b5_Click(object sender, EventArgs e)
         {
             display.Text = display.Text + "5";
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void b7_Click(object sender, EventArgs e)
         {
             display.Text = display.Text + "7";
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void b2_Click(object sender, EventArgs e)
         {
             display.Text = display.Text + "2";
         }
@@ -158,37 +153,37 @@ namespace CalculadoraBase
 
         }
 
-        private void b1_Click_1(object sender, EventArgs e)
+        private void b1_Click(object sender, EventArgs e)
         {
             display.Text = display.Text + "1";
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void b3_Click(object sender, EventArgs e)
         {
             display.Text = display.Text + "3";
         }
 
-        private void button20_Click(object sender, EventArgs e)
+        private void b0_Click(object sender, EventArgs e)
         {
             display.Text = display.Text + "0";
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void b4_Click(object sender, EventArgs e)
         {
             display.Text = display.Text + "4";
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void b6_Click(object sender, EventArgs e)
         {
             display.Text = display.Text + "6";
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void b8_Click(object sender, EventArgs e)
         {
             display.Text = display.Text + "8";
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void b9_Click(object sender, EventArgs e)
         {
             display.Text = display.Text + "9";
         }
@@ -213,7 +208,7 @@ namespace CalculadoraBase
 
         }
 
-        private void button11_Click(object sender, EventArgs e)
+        private void bMult_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(display.Text))
             {
@@ -234,7 +229,7 @@ namespace CalculadoraBase
 
         }
 
-        private void button12_Click(object sender, EventArgs e)
+        private void bDivisao_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(display.Text))
             {
@@ -255,13 +250,13 @@ namespace CalculadoraBase
 
         }
 
-        private void créditosToolStripMenuItem_Click(object sender, EventArgs e)
+        private void creditosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormCreditos formCreditos = new FormCreditos();
             formCreditos.ShowDialog();
         }
 
-        private void bporcento_Click(object sender, EventArgs e)
+        private void bPorcento_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(display.Text))
             {
@@ -280,7 +275,7 @@ namespace CalculadoraBase
             }
         }
 
-        private void button17_Click(object sender, EventArgs e)
+        private void bQuadrado_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(display.Text))
             {
@@ -300,7 +295,7 @@ namespace CalculadoraBase
 
         }
 
-        private void button16_Click(object sender, EventArgs e)
+        private void bPotenciacao_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(display.Text))
             {
@@ -308,7 +303,7 @@ namespace CalculadoraBase
                 {
                     operacao = 6;
 
-                    
+
 
                     v1 = Double.Parse(display.Text);
                     display.Text = "";
@@ -323,7 +318,7 @@ namespace CalculadoraBase
 
         }
 
-        private void button15_Click(object sender, EventArgs e)
+        private void bRaiz_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(display.Text))
             {
@@ -342,7 +337,7 @@ namespace CalculadoraBase
             }
         }
 
-        private void button18_Click(object sender, EventArgs e)
+        private void bFatoracao_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(display.Text))
             {
@@ -387,7 +382,7 @@ namespace CalculadoraBase
             }
         }
 
-        private void button14_Click(object sender, EventArgs e)
+        private void bAbsolute_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(display.Text))
             {
@@ -406,7 +401,7 @@ namespace CalculadoraBase
             }
         }
 
-        private void bnegepos_Click(object sender, EventArgs e)
+        private void bNegpos_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(display.Text))
             {
@@ -424,7 +419,7 @@ namespace CalculadoraBase
             }
         }
 
-        private void button9_Click(object sender, EventArgs e)
+        private void bBackspace_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(display.Text))
             {
@@ -441,6 +436,11 @@ namespace CalculadoraBase
 
                 }
             }
+        }
+
+        private void sobreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
