@@ -290,7 +290,7 @@
             // 
             button14.AutoSize = true;
             button14.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            button14.Location = new Point(202, 60);
+            button14.Location = new Point(202, 94);
             button14.Margin = new Padding(3, 2, 3, 2);
             button14.Name = "button14";
             button14.Size = new Size(41, 30);
@@ -298,6 +298,7 @@
             button14.Text = "|X|";
             button14.TextAlign = ContentAlignment.BottomCenter;
             button14.UseVisualStyleBackColor = true;
+            button14.Click += button14_Click;
             // 
             // button15
             // 
@@ -344,7 +345,7 @@
             // button9
             // 
             button9.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            button9.Location = new Point(199, 94);
+            button9.Location = new Point(202, 60);
             button9.Margin = new Padding(3, 2, 3, 2);
             button9.Name = "button9";
             button9.Size = new Size(41, 30);
@@ -352,6 +353,7 @@
             button9.Text = "CE";
             button9.TextAlign = ContentAlignment.BottomCenter;
             button9.UseVisualStyleBackColor = true;
+            button9.Click += button9_Click;
             // 
             // button18
             // 
@@ -364,6 +366,7 @@
             button18.Text = "N!";
             button18.TextAlign = ContentAlignment.BottomCenter;
             button18.UseVisualStyleBackColor = true;
+            button18.Click += button18_Click;
             // 
             // bnegepos
             // 
@@ -377,6 +380,7 @@
             bnegepos.Text = "+/-";
             bnegepos.TextAlign = ContentAlignment.BottomCenter;
             bnegepos.UseVisualStyleBackColor = true;
+            bnegepos.Click += bnegepos_Click;
             // 
             // b2
             // 

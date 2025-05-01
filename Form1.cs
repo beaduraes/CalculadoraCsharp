@@ -51,12 +51,14 @@ namespace CalculadoraBase
 
         private void bigual_Click(object sender, EventArgs e)
         {
+            // Verifica se o valor digitado pode ser convertido para número
             if (!double.TryParse(display.Text, out double v2))
             {
                 MessageBox.Show("Entrada inválida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
+            // Executa a operação com base no código salvo em 'operacao'
             switch (operacao)
             {
                 case 1: // Soma
@@ -88,22 +90,43 @@ namespace CalculadoraBase
                     resp = Math.Round((v1 / 100) * v2, 5);
                     break;
                 case 6: // Exponenciação
-                    resp = Math.Pow(v1, v2);
-                    if (v1 == 0 && v2 == 0) resp = 1;
+                    if(v1 < 0)
+                    {
+                        MessageBox.Show("Base negativa não é permitida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    if(v2 < 0)
+                    {
+                        MessageBox.Show("Expoente negativo não é permitido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    resp = (v1 == 0 && v2 == 0) ? 1 : Math.Pow(v1, v2); // 0^0 definido como 1
                     break;
                 case 7: // Radiciação
-                    resp = Math.Pow(v1, 1/v2);
+
+                    if(v1 < 0 && v2 % 2 == 0)
+                    {
+                        MessageBox.Show("Raiz de número negativo não é permitida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    if(v2 == 0)
+                    {
+                        MessageBox.Show("Raiz de zero não é permitida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    resp = (v1 == 0 && v2 == 0) ? 1 : Math.Pow(v1, 1.0 / v2); 
                     if (v1 == 0 && v2 == 0) resp = 1;
                     break;
-                case 8: // Radiciação
-                    // Implementado diretamente
-                    return;
                 default:
                     MessageBox.Show("Operação não reconhecida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
             }
 
-            display.Text = resp.ToString();
+            display.Text = $"{resp}";
             virgula = (resp % 1) != 0;
         }
 
@@ -263,7 +286,6 @@ namespace CalculadoraBase
             {
                 try
                 {
-                    operacao = 8;
                     v1 = Double.Parse(display.Text);
                     resp = Math.Pow(v1, 2);
                     display.Text = $"{resp}";
@@ -285,6 +307,9 @@ namespace CalculadoraBase
                 try
                 {
                     operacao = 6;
+
+                    
+
                     v1 = Double.Parse(display.Text);
                     display.Text = "";
                     virgula = false;
@@ -315,8 +340,107 @@ namespace CalculadoraBase
 
                 }
             }
+        }
 
+        private void button18_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(display.Text))
+            {
+                try
+                {
+                    v1 = Double.Parse(display.Text);
 
+                    if (v1 < 0)
+                    {
+                        MessageBox.Show("Fatorial de número negativo não é permitido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    if (v1 % 1 != 0)
+                    {
+                        MessageBox.Show("Fatorial de número não inteiro não é permitido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    if (v1 == 0)
+                    {
+                        resp = 1;
+                    }
+
+                    else
+                    {
+                        resp = 1;
+                        for (int i = 1; i <= v1; i++)
+                        {
+                            resp *= i;
+                        }
+                    }
+
+                    display.Text = $"{resp}";
+                    virgula = false;
+                }
+                catch (System.FormatException)
+                {
+                    MessageBox.Show("Erro no formato do número");
+
+                }
+            }
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(display.Text))
+            {
+                try
+                {
+                    resp = Double.Parse(display.Text);
+                    resp = Math.Abs(resp);
+                    display.Text = $"{resp}";
+                    virgula = false;
+                }
+                catch (System.FormatException)
+                {
+                    MessageBox.Show("Erro no formato do número");
+
+                }
+            }
+        }
+
+        private void bnegepos_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(display.Text))
+            {
+                try
+                {
+                    resp = Double.Parse(display.Text);
+                    display.Text = $"{resp * -1}";
+                    virgula = false;
+                }
+                catch (System.FormatException)
+                {
+                    MessageBox.Show("Erro no formato do número");
+
+                }
+            }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(display.Text))
+            {
+                try
+                {
+                    resp = Double.Parse(display.Text);
+                    String stringResp = resp.ToString();
+                    display.Text = $"{stringResp.Remove(stringResp.Length - 1)}";
+                    virgula = false;
+                }
+                catch (System.FormatException)
+                {
+                    MessageBox.Show("Erro no formato do número");
+
+                }
+            }
         }
     }
 }
