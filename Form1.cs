@@ -1,4 +1,4 @@
-namespace CalculadoraBase
+ï»¿namespace CalculadoraBase
 {
     public partial class Form1 : Form
     {
@@ -33,12 +33,12 @@ namespace CalculadoraBase
                 {
                     operacao = 1;
                     v1 = Double.Parse(display.Text);
-                    display.Text = "";
+                    display.Text += " + ";
                     virgula = false;
                 }
                 catch (System.FormatException)
                 {
-                    MessageBox.Show("Erro no formato do número");
+                    MessageBox.Show("Erro no formato do nÃºmero");
 
                 }
             }
@@ -46,84 +46,88 @@ namespace CalculadoraBase
 
         private void bigual_Click(object sender, EventArgs e)
         {
-            // Verifica se o valor digitado pode ser convertido para número
-            if (!double.TryParse(display.Text, out double v2))
+            string text = display.Text.Trim();
+
+            // Caso especial: âˆš(n)
+            if (text.StartsWith("âˆš(") && text.EndsWith(")"))
             {
-                MessageBox.Show("Entrada inválida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Extrai o que estÃ¡ dentro dos parÃªnteses
+                string inside = text.Substring(2, text.Length - 3);
+                if (!double.TryParse(inside, out v1))
+                {
+                    MessageBox.Show("NÃ£o foi possÃ­vel converter o valor dentro de âˆš().",
+                                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                // CÃ¡lculo da raiz quadrada
+                if (v1 < 0)
+                {
+                    MessageBox.Show("Raiz quadrada de nÃºmero negativo nÃ£o Ã© permitida.", "Erro",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                resp = Math.Sqrt(v1);
+                display.Text = resp.ToString();
+                virgula = (resp % 1) != 0;
                 return;
             }
 
-            // Executa a operação com base no código salvo em 'operacao'
-            switch (operacao)
+            // Se nÃ£o for âˆš, segue o fluxo normal de "num operador num"
+            var partes = text.Split(' ');
+            if (partes.Length != 3)
             {
-                case 1: // Soma
+                MessageBox.Show("Formato invÃ¡lido. Use: nÃºmeroÂ [espaÃ§o] operador [espaÃ§o] nÃºmero",
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!double.TryParse(partes[0], out v1) ||
+                !double.TryParse(partes[2], out v2))
+            {
+                MessageBox.Show("NÃ£o foi possÃ­vel converter um dos operandos para nÃºmero.",
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string op = partes[1];
+            switch (op)
+            {
+                case "+":
                     resp = v1 + v2;
                     break;
-
-                case 2: // Subtração
+                case "-":
                     resp = v1 - v2;
                     break;
-
-                case 3: // Multiplicação
+                case "x":
+                case "*":
                     resp = v1 * v2;
                     break;
-
-                case 4: // Divisão
+                case "Ã·":
+                case "/":
                     if (v2 == 0)
                     {
-                        MessageBox.Show("Divisão por zero não é permitida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("DivisÃ£o por zero nÃ£o Ã© permitida.", "Erro",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     resp = v1 / v2;
                     break;
-                case 5: // Porcentagem
-                    if (v1 == 0)
-                    {
-                        MessageBox.Show("Valor base igual a zero.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                case "%":
                     resp = Math.Round((v1 / 100) * v2, 5);
                     break;
-                case 6: // Exponenciação
-                    if (v1 < 0)
-                    {
-                        MessageBox.Show("Base negativa não é permitida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    if (v2 < 0)
-                    {
-                        MessageBox.Show("Expoente negativo não é permitido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    resp = (v1 == 0 && v2 == 0) ? 1 : Math.Pow(v1, v2); // 0^0 definido como 1
-                    break;
-                case 7: // Radiciação
-
-                    if (v1 < 0 && v2 % 2 == 0)
-                    {
-                        MessageBox.Show("Raiz de número negativo não é permitida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    if (v2 == 0)
-                    {
-                        MessageBox.Show("Raiz de zero não é permitida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    resp = (v1 == 0 && v2 == 0) ? 1 : Math.Pow(v1, 1.0 / v2);
-                    if (v1 == 0 && v2 == 0) resp = 1;
+                case "^":
+                    resp = Math.Pow(v1, v2);
                     break;
                 default:
-                    MessageBox.Show("Operação não reconhecida.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show($"Operador '{op}' nÃ£o reconhecido.", "Erro",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
             }
 
-            display.Text = $"{resp}";
+            display.Text = resp.ToString();
             virgula = (resp % 1) != 0;
         }
+
 
         private void bClear_Click(object sender, EventArgs e)
         {
@@ -196,12 +200,12 @@ namespace CalculadoraBase
                 {
                     operacao = 2;
                     v1 = Double.Parse(display.Text);
-                    display.Text = "";
+                    display.Text += " - ";
                     virgula = false;
                 }
                 catch (System.FormatException)
                 {
-                    MessageBox.Show("Erro no formato do número");
+                    MessageBox.Show("Erro no formato do nÃºmero");
 
                 }
             }
@@ -216,12 +220,12 @@ namespace CalculadoraBase
                 {
                     operacao = 3;
                     v1 = Double.Parse(display.Text);
-                    display.Text = "";
+                    display.Text += " x ";
                     virgula = false;
                 }
                 catch (System.FormatException)
                 {
-                    MessageBox.Show("Erro no formato do número");
+                    MessageBox.Show("Erro no formato do nÃºmero");
 
                 }
             }
@@ -237,12 +241,12 @@ namespace CalculadoraBase
                 {
                     operacao = 4;
                     v1 = Double.Parse(display.Text);
-                    display.Text = "";
+                    display.Text += " Ã· ";
                     virgula = false;
                 }
                 catch (System.FormatException)
                 {
-                    MessageBox.Show("Erro no formato do número");
+                    MessageBox.Show("Erro no formato do nÃºmero");
 
                 }
             }
@@ -258,22 +262,20 @@ namespace CalculadoraBase
 
         private void bPorcento_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(display.Text))
+            // SÃ³ procede se o display contiver um nÃºmero vÃ¡lido
+            if (double.TryParse(display.Text, out v1))
             {
-                try
-                {
-                    operacao = 5;
-                    v1 = Double.Parse(display.Text);
-                    display.Text = "";
-                    virgula = false;
-                }
-                catch (System.FormatException)
-                {
-                    MessageBox.Show("Erro no formato do número");
-
-                }
+                operacao = 5;
+                display.Text += " % ";  // adiciona o operador com espaÃ§os
+                virgula = false;
+            }
+            else
+            {
+                MessageBox.Show("Erro no formato do nÃºmero", "Erro",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void bQuadrado_Click(object sender, EventArgs e)
         {
@@ -288,54 +290,68 @@ namespace CalculadoraBase
                 }
                 catch (System.FormatException)
                 {
-                    MessageBox.Show("Erro no formato do número");
+                    MessageBox.Show("Erro no formato do nÃºmero");
 
                 }
             }
 
         }
 
-        private void bPotenciacao_Click(object sender, EventArgs e)
+        private void bExponenciacao_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(display.Text))
+            if (double.TryParse(display.Text, out v1))
             {
-                try
+                if (v1 == 0)
                 {
-                    operacao = 6;
-
-
-
-                    v1 = Double.Parse(display.Text);
-                    display.Text = "";
-                    virgula = false;
+                    // Zero elevado a algo pode dar erro, dependendo do expoente depois
+                    MessageBox.Show("Cuidado: 0 elevado a 0 ou expoente negativo Ã© indefinido ou infinito.",
+                                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                catch (System.FormatException)
+                else if (v1 < 0)
                 {
-                    MessageBox.Show("Erro no formato do número");
-
+                    MessageBox.Show("Aviso: potÃªncias com base negativa podem gerar resultados invÃ¡lidos se o expoente for fracionÃ¡rio.",
+                                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
+
+                operacao = 6;
+                display.Text += " ^ ";
+                virgula = false;
             }
-
+            else
+            {
+                MessageBox.Show("Erro no formato do nÃºmero", "Erro",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+
 
         private void bRaiz_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(display.Text))
-            {
-                try
-                {
-                    operacao = 7;
-                    v1 = Double.Parse(display.Text);
-                    display.Text = "";
-                    virgula = false;
-                }
-                catch (System.FormatException)
-                {
-                    MessageBox.Show("Erro no formato do número");
+            double value = 0;
 
+            // Se o display nÃ£o estiver vazio, tenta converter para nÃºmero
+            if (!string.IsNullOrWhiteSpace(display.Text))
+            {
+                if (!double.TryParse(display.Text, out value))
+                {
+                    MessageBox.Show("Erro no formato do nÃºmero", "Erro",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
+
+            // Agora 'value' Ã© 0 se estava vazio, ou o nÃºmero que o usuÃ¡rio digitou
+            operacao = 7;
+            v1 = value;
+
+            // Exibe âˆš(v1)
+            display.Text = $"âˆš({v1})";
+
+            // Reset da vÃ­rgula
+            virgula = false;
         }
+
 
         private void bFatoracao_Click(object sender, EventArgs e)
         {
@@ -347,13 +363,13 @@ namespace CalculadoraBase
 
                     if (v1 < 0)
                     {
-                        MessageBox.Show("Fatorial de número negativo não é permitido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Fatorial de nÃºmero negativo nÃ£o Ã© permitido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
                     if (v1 % 1 != 0)
                     {
-                        MessageBox.Show("Fatorial de número não inteiro não é permitido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Fatorial de nÃºmero nÃ£o inteiro nÃ£o Ã© permitido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -376,7 +392,7 @@ namespace CalculadoraBase
                 }
                 catch (System.FormatException)
                 {
-                    MessageBox.Show("Erro no formato do número");
+                    MessageBox.Show("Erro no formato do nÃºmero");
 
                 }
             }
@@ -395,7 +411,7 @@ namespace CalculadoraBase
                 }
                 catch (System.FormatException)
                 {
-                    MessageBox.Show("Erro no formato do número");
+                    MessageBox.Show("Erro no formato do nÃºmero");
 
                 }
             }
@@ -403,39 +419,63 @@ namespace CalculadoraBase
 
         private void bNegpos_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(display.Text))
-            {
-                try
-                {
-                    resp = Double.Parse(display.Text);
-                    display.Text = $"{resp * -1}";
-                    virgula = false;
-                }
-                catch (System.FormatException)
-                {
-                    MessageBox.Show("Erro no formato do número");
+            var text = display.Text;
+            if (string.IsNullOrWhiteSpace(text))
+                return;
 
+            // Divide em partes separadas por espaÃ§o
+            var parts = text.Split(' ');
+
+            if (parts.Length == 1)
+            {
+                // Caso simples: sÃ³ um nÃºmero
+                if (double.TryParse(parts[0], out double val))
+                {
+                    val = -val;
+                    display.Text = val.ToString();
+                    virgula = (val % 1) != 0;
                 }
+            }
+            else if (parts.Length == 3)
+            {
+                // JÃ¡ existe operador e segundo operando: inverte sinal do segundo
+                string op = parts[1];
+                if (double.TryParse(parts[2], out double val2))
+                {
+                    val2 = -val2;
+                    display.Text = $"{parts[0]} {op} {val2}";
+                    virgula = (val2 % 1) != 0;
+                }
+            }
+            else if (text.EndsWith(" "))
+            {
+                // Acabou de inserir o operador, comeÃ§a expoente negativo
+                display.Text += "-";
+                virgula = false;
             }
         }
 
+
         private void bBackspace_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(display.Text))
-            {
-                try
-                {
-                    resp = Double.Parse(display.Text);
-                    String stringResp = resp.ToString();
-                    display.Text = $"{stringResp.Remove(stringResp.Length - 1)}";
-                    virgula = false;
-                }
-                catch (System.FormatException)
-                {
-                    MessageBox.Show("Erro no formato do número");
+                var text = display.Text;
+            if (string.IsNullOrEmpty(text))
+                return;
 
-                }
+            // Se terminar num espaÃ§o, Ã© sinal de que sobrou " <op> ",
+            // entÃ£o removemos esses 3 caracteres de uma vez
+            if (text.Length >= 3 && text.EndsWith(" "))
+            {
+                display.Text = text.Substring(0, text.Length - 3);
             }
+            else
+            {
+                // senÃ£o, apaga apenas o Ãºltimo caractere
+                display.Text = text.Substring(0, text.Length - 1);
+            }
+
+            // Atualiza a flag de vÃ­rgula: se ainda existir ',' no texto
+            virgula = display.Text.Contains(",");
         }
 
         private void sobreToolStripMenuItem_Click(object sender, EventArgs e)

@@ -306,7 +306,7 @@
             bpotencia.Text = "xʸ";
             bpotencia.TextAlign = ContentAlignment.BottomCenter;
             bpotencia.UseVisualStyleBackColor = true;
-            bpotencia.Click += bPotenciacao_Click;
+            bpotencia.Click += bExponenciacao_Click;
             // 
             // bquadrado
             // 
