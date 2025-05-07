@@ -1,4 +1,6 @@
-﻿namespace CalculadoraBase
+﻿using System.Windows.Forms;
+
+namespace CalculadoraBase
 {
     public partial class Form1 : Form
     {
@@ -9,6 +11,9 @@
         public Form1()
         {
             InitializeComponent();
+
+            menuStrip1.RenderMode = ToolStripRenderMode.Professional;
+            menuStrip1.Renderer = new ToolStripProfessionalRenderer(new MyColorTable());
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -481,6 +486,28 @@
         private void sobreToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-        }
+    }
+
+
+        
+
+    }
+
+    public class MyColorTable : ProfessionalColorTable
+    {
+        // Fundo do menu
+        public override Color ToolStripDropDownBackground => Color.Black;
+
+        // Fundo do item quando o mouse passa por cima
+        //public override Color MenuItemSelected => Color.Black;
+        //public override Color MenuItemSelectedGradientBegin => Color.Black;
+        //public override Color MenuItemSelectedGradientEnd => Color.Black;
+
+        // Fundo do item enquanto está sendo clicado
+        public override Color MenuItemPressedGradientBegin => Color.Black;
+        public override Color MenuItemPressedGradientEnd => Color.Black;
+
+        // Borda do item selecionado
+        public override Color MenuItemBorder => Color.Black;
     }
 }
