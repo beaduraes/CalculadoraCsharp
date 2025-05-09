@@ -129,6 +129,7 @@ namespace CalculadoraBase
                     return;
             }
 
+            resp = Math.Round(resp, 4);
             display.Text = resp.ToString();
             virgula = (resp % 1) != 0;
         }
@@ -463,7 +464,7 @@ namespace CalculadoraBase
 
         private void bBackspace_Click(object sender, EventArgs e)
         {
-                var text = display.Text;
+            var text = display.Text;
             if (string.IsNullOrEmpty(text))
                 return;
 
@@ -486,11 +487,12 @@ namespace CalculadoraBase
         private void sobreToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-    }
+        }
 
-
-        
-
+        private void sairToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 
     public class MyColorTable : ProfessionalColorTable
@@ -508,6 +510,6 @@ namespace CalculadoraBase
         public override Color MenuItemPressedGradientEnd => Color.Black;
 
         // Borda do item selecionado
-        public override Color MenuItemBorder => Color.Black;
+        public override Color MenuItemBorder => Color.White;
     }
 }
